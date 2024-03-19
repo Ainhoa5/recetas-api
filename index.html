@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subir Imagen de Producto</title>
+</head>
+<body>
+    <form action="http://localhost:3000/products" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Nombre del producto" required>
+        <input type="number" step="any" name="price" placeholder="Precio" required>
+        <input type="file" name="image" required>
+        <button type="submit">Subir Producto</button>
+    </form>
+</body>
+</html>

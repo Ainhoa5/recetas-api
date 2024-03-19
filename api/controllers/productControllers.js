@@ -1,3 +1,6 @@
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // Configura un directorio temporal para archivos subidos
+const cloudinary = require('../../config/cloudinaryConfig');
 const ProductModel = require('../models/productModel');
 
 const getProducts = async (req, res, next) => {
@@ -23,10 +26,21 @@ const getProductById = async (req, res, next) => {
     }
 };
 
+// Asumiendo que tienes un endpoint que usa este middleware de Multer para manejar la subida de archivos
+exports.uploadProductImage = upload.single('image');
+
 const createProduct = async (req, res, next) => {
     try {
+        // Subir imagen a Cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path);
+
+        // Recoger otros datos del producto
         const { name, price } = req.body;
-        const createdProduct = await ProductModel.create({ name, price });
+        const imageUrl = result.secure_url; // URL de la imagen subida
+
+        // Crear producto con la URL de la imagen
+        const createdProduct = await ProductModel.create({ name, price, imageUrl });
+        
         res.status(201).json({ message: 'Producto creado', createdProduct });
     } catch (error) {
         next(error);
