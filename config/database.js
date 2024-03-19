@@ -1,16 +1,16 @@
-// Importa el paquete dotenv y carga las variables de entorno
-require('dotenv').config();
-const mysql = require('mysql2/promise');
+const mongoose = require("mongoose");
+const app = require("../app");
+const port = process.env.PORT || 3977;
+const urlMongoDB = "mongodb+srv://carlosaldea33:smr1234@elprimercluster.aqrfnxw.mongodb.net/apiRecipes";
 
-// Crea un pool de conexiones usando las variables de entorno
-const pool = mysql.createPool({
-    connectionLimit: 10, // el número máximo de conexiones permitidas al mismo tiempo
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
+mongoose.connect(urlMongoDB)
+  .then(() => {
+    console.log("La conexión a la base de datos es correcta");
 
-module.exports = pool;
-
-module.exports = pool;
+    app.listen(port, () => {
+      console.log("Servidor del API Rest funcionando en http://localhost:${port}");
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });

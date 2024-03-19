@@ -4,13 +4,15 @@ const app = express();
 
 const setupMiddleware = require('./middleware/middleware');
 const { handle404, handleErrors } = require('./middleware/errorHandling');
-const productRoutes = require('./api/routes/products');
 
 // Configura middlewares comunes
 setupMiddleware(app);
 
-// Rutas
-app.use('/products', productRoutes);
+//Cargar rutas
+const recipe_routes = require("./api/routes/recipe");
+
+//Rutas base
+app.use("/api", recipe_routes);
 
 // Manejo de errores
 app.use(handle404);
