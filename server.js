@@ -1,7 +1,11 @@
-// server.js
-const http = require('http'); // permite crear servidores HTTP
-const app = require('./app'); // configuraciones de la API
-const port = process.env.PORT || 3000; // Definir el puerto con el que trabajar
-const server = http.createServer(app); // Creamos un servidor HTTP que utiliza la aplicación Express para manejar solicitudes
+require('dotenv').config(); // Si decides usar variables de entorno
+const app = require("./app");
+const connectDatabase = require("./config/database");
+const port = process.env.PORT || 3977;
 
-server.listen(port);
+connectDatabase().then(() => {
+  app.listen(port, () => {
+    console.log(`Servidor del API Rest funcionando en http://localhost:${port}`);
+  });
+});
+

@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
-const app = require("../app");
-const port = process.env.PORT || 3977;
-const urlMongoDB = "mongodb+srv://carlosaldea33:smr1234@elprimercluster.aqrfnxw.mongodb.net/apiRecipes";
+require('dotenv').config();
+const urlMongoDB = "mongodb.net/apiRecipes"; // Considera usar variables de entorno para esto
 
-mongoose.connect(urlMongoDB)
-  .then(() => {
+const connectDatabase = async () => {
+  try {
+    await mongoose.connect(process.env.DB_URL);
     console.log("La conexión a la base de datos es correcta");
+  } catch (error) {
+    console.error("Error al conectar a la base de datos:", error);
+    process.exit(1); // Detiene la ejecución del servidor si no puede conectarse a la base de datos
+  }
+};
 
-    app.listen(port, () => {
-      console.log("Servidor del API Rest funcionando en http://localhost:${port}");
-    });
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+module.exports = connectDatabase;
