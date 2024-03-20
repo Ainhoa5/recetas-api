@@ -1,2 +1,106 @@
-# recetas-api
- 
+# Guía de API REST - Recetas API
+
+Esta es una guía para interactuar con la API REST de recetas. La API permite manejar recetas y usuarios, incluyendo operaciones como obtener, crear, actualizar y eliminar recetas, así como manejar información de usuarios.
+
+## Inicio Rápido
+
+Para iniciar la aplicación, sigue estos pasos:
+
+1. Clona el repositorio a tu máquina local.
+
+2. Abre una terminal en la raíz del proyecto.
+
+3. Ejecuta `npm install` para instalar todas las dependencias del proyecto.
+
+4. Copia el fichero`.env.example` y cambia el nombre a `.env`, dentro, configura la URI de MongoDB.
+
+5. Inicia la aplicación con `npm start`.
+
+La aplicación ahora debería estar corriendo y escuchando por peticiones.
+
+## Endpoints Disponibles
+
+A continuación, se describen los endpoints disponibles y cómo interactuar con ellos usando Postman para el testeo.
+
+### Recetas
+
+#### Obtener Todas las Recetas
+
+- **GET** `/api/`
+
+  Obtén una lista de todas las recetas disponibles.
+
+  #### Ejemplo de solicitud:
+    GET http://localhost:3000/api/
+
+#### Obtener Receta por ID
+
+- **GET** `/api/:idRecipe`
+
+    Obtén los detalles de una receta específica por su ID.
+
+    #### Ejemplo de solicitud:
+    GET http://localhost:3000/api/5f987eaf2f9b3100166d9c84
+
+#### Crear una Nueva Receta
+
+- **POST** `/api/`
+
+    Añade una nueva receta a la base de datos.
+
+    #### Cuerpo de la solicitud:
+
+    ```json
+    {
+      "nombre": "Nombre de la Receta",
+      "ingredientes": {
+        "ingrediente1": "cantidad",
+        "ingrediente2": "cantidad"
+      },
+      "alergenos": ["Alergeno1", "Alergeno2"]
+    }
+    ```
+    POST http://localhost:3000/api/
+
+#### Actualizar una Receta
+
+- **PUT** `/api/:idRecipe`
+
+    Modifica la receta seleccionada de la base de datos basado en la ID.
+
+    #### Cuerpo de la solicitud:
+
+    ```json
+    {
+      "nombre": "Nuevo Nombre de la Receta",
+      "ingredientes": {
+        "ingrediente1": "nueva cantidad",
+        "ingrediente2": "nueva cantidad"
+      }
+    }
+    ```
+    PUT http://localhost:3000/api/5f987eaf2f9b3100166d9c84
+
+#### Eliminar una Receta
+
+- **DELETE** `/api/:idRecipe`
+
+    Elimina la receta seleccionada de la base de datos basado en la ID.
+
+    #### Ejemplo de solicitud:
+
+    DELETE http://localhost:3000/api/5f987eaf2f9b3100166d9c84
+
+### Usuarios
+
+Los endpoints de este elemento tienen un funcionamiento similar al anterior
+
+## Manejo de Errores
+
+La API devuelve errores estándar HTTP para indicar problemas con las solicitudes:
+
+- `404 Not Found`: No se pudo encontrar el recurso solicitado.
+- `400 Bad Request`: Problema con los datos enviados en la solicitud.
+- `500 Internal Server Error`: Error interno del servidor.
+
+Asegúrate de manejar estos errores adecuadamente en tu aplicación cliente.
