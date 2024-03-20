@@ -91,20 +91,17 @@ async function updateRecipe(req, res){
 }
 
 // Obtener todas las recetas que no contienen un alérgeno específico
-async function getRecipesWithoutAllergen(req, res){
-    const allergen = req.params.allergen;
+async function getRecipesWithoutAllergens(req, res) {
+    const alergenos = req.params.alergenos.split(','); // Convierte la cadena en un array
 
     try {
-        const recipes = await Recipe.find({ alergenos: { $nin: [allergen] } }).sort({created_at: -1});
-        if(!recipes){
-            res.status(400).send({msg: "No se han encontrado recetas"});
-        } else {
-            res.status(200).send(recipes);
-        }
+        const recipes = await Recipe.find({ alergenos: { $nin: alergenos } });
+        res.status(200).send(recipes);
     } catch (error) {
         res.status(500).send(error);
     }
 }
+
 
 //Eliminar tarea
 async function deleteRecipe(req, res){
@@ -129,6 +126,6 @@ module.exports = {
     getRecipe,
     updateRecipe,
     deleteRecipe,
-    getRecipesWithoutAllergen,
+    getRecipesWithoutAllergens,
     getRecipesByName
 };
