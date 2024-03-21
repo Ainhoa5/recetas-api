@@ -1,28 +1,55 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
-const { use } = require('../routes/recipe');
+const { use } = require("../routes/recipe");
+const PasswordUtil = require("../utils/passwordUtil");
 
 //Registrar usuario
-const registerUser = async (req, res) => {
-    const user = new User();
-    const params = req.body;
-    try {
-      // Encriptar la contraseña
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(req.body.password, salt);
-  
-      user.nombre = params.nombre;
-      user.password = hashedPassword;
-  
-      // Guardar el nuevo usuario en la base de datos
-      const savedUser = await user.save();
-  
-      res.json(savedUser);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Error del servidor' });
+async function registerUser(req, res) {
+  try {
+    // Comprobar si ya existe un usuario con el mismo nombre
+    const existingUser = await User.findOne({ nombre: req.body.nombre });
+    if (existingUser) {
+      return res.status(400).send("Ya existe un usuario con ese nombre");
     }
-  };
+
+    // Si no existe, proceder a crear el nuevo usuario
+    const hashedPassword = await PasswordUtil.encryptPassword(
+      req.body.password
+    );
+    const user = new User({
+      nombre: req.body.nombre,
+      password: hashedPassword,
+    });
+
+    const savedUser = await user.save();
+    res.json(savedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error del servidor" });
+  }
+}
+
+async function loginUser(req, res) {
+  try {
+    const user = await User.findOne({ nombre: req.body.nombre });
+    if (!user) {
+      return res.status(400).send("Usuario no encontrado");
+    }
+
+    const passwordMatch = await PasswordUtil.comparePasswords(
+      req.body.password,
+      user.password
+    );
+    if (!passwordMatch) {
+      return res.status(400).send("Contraseña incorrecta");
+    } else {
+      res.send("Inicio de sesión exitoso");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error del servidor");
+  }
+}
 
 //Obtener todos los usuarios
 async function getUsers(req, res) {
@@ -73,7 +100,6 @@ async function updateUser(req, res) {
   }
 }
 
-
 //Eliminar usuario
 async function deleteUser(req, res) {
   const idUser = req.params.idUser;
@@ -92,19 +118,19 @@ async function deleteUser(req, res) {
 }
 
 //Conseguir contraseña por id
-async function getPasswordById (req, res) {
+async function getPasswordById(req, res) {
   try {
-    const user = await User.findById(req.params.id).select('password');
+    const user = await User.findById(req.params.id).select("password");
     if (user) {
       res.json({ password: user.password });
     } else {
-      res.status(404).json({ message: 'Usuario no encontrado' });
+      res.status(404).json({ message: "Usuario no encontrado" });
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error del servidor' });
+    res.status(500).json({ message: "Error del servidor" });
   }
-};
+}
 
 module.exports = {
   getUsers,
@@ -112,5 +138,6 @@ module.exports = {
   updateUser,
   deleteUser,
   getPasswordById,
-  registerUser
+  registerUser,
+  loginUser,
 };
