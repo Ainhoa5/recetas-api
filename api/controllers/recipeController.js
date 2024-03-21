@@ -1,22 +1,34 @@
 const Recipe = require("../models/recipeModel");
+const cloudinary = require('../../config/cloudinaryConfig');
 
 //Crear tarea
+// Crear receta con manejo de imagen
 async function createRecipe(req, res) {
-  const recipe = new Recipe();
-  const params = req.body;
+  const { nombre, ingredientes, alergenos } = req.body;
 
-  recipe.nombre = params.nombre;
-  recipe.ingredientes = params.ingredientes;
-  recipe.alergenos = params.alergenos;
+  let imageUrl = '';
+  if (req.file) {
+    // Si se subió una imagen, subirla a Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
+    imageUrl = result.secure_url; // Guardar la URL de la imagen
+  }
 
   try {
-    const recipeStored = await recipe.save();
+    // Crear y guardar la nueva receta incluyendo la URL de la imagen
+    const recipeStored = await Recipe.create({
+      nombre,
+      ingredientes,
+      alergenos,
+      imageUrl // Añade la URL de la imagen al documento
+    });
+
     if (!recipeStored) {
       res.status(404).send({ msg: "No se ha podido guardar la receta" });
     } else {
       res.status(200).send({ recipe: recipeStored });
     }
   } catch (error) {
+    console.error(error);
     res.status(500).send({ msg: "Error del servidor" });
   }
 }

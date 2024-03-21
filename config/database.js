@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-require('dotenv').config();
-const urlMongoDB = "mongodb.net/apiRecipes"; // Considera usar variables de entorno para esto
+require('dotenv').config();// Considera usar variables de entorno para esto
 
 const connectDatabase = async () => {
   try {

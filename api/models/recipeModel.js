@@ -11,12 +11,16 @@ const recipeSchema = schema({
     ingredientes: {
         type: Map,
         of: String,
-        required: true // Hace que el mapa de ingredientes sea obligatorio
+        required: false // Hace que el mapa de ingredientes sea obligatorio
     },
     alergenos: {
         type: [String],
         required: false, // Los alérgenos no son obligatorios
         default: [] // Por defecto, los alérgenos son un array vacío
+    },
+    imageUrl: {
+        type: String, // URL de la imagen
+        required: true 
     }
 });
 
