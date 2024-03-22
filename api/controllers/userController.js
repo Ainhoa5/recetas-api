@@ -124,7 +124,7 @@ async function getPasswordById(req, res) {
     if (user) {
       res.json({ password: user.password });
     } else {
-      res.status(404).json({ message: "Usuario no encontrado" });
+      res.status(404).jsgit on({ message: "Usuario no encontrado" });
     }
   } catch (err) {
     console.error(err);
