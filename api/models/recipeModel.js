@@ -12,6 +12,7 @@ const recipeSchema = schema({
     type: String,
     required: true, // Hace que el nombre sea obligatorio
     trim: true, // Elimina los espacios al principio y al final
+    maxlength: 400, // Establece una longitud máxima para el nombre
   },
   alergenos: {
     type: [String],
