@@ -120,7 +120,7 @@ async function deleteUser(req, res) {
 //Conseguir contraseña por id
 async function getPasswordById(req, res) {
   try {
-    const user = await User.findById(req.params.idUser).select("password");
+    const user = await User.findById(req.params.id).select("password");
     if (user) {
       res.json({ password: user.password });
     } else {
