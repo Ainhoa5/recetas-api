@@ -4,7 +4,7 @@ const path = require('path');
 // Configuración de almacenamiento de Multer
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, path.join(__dirname, '../uploads/')); // Asegúrate de que este directorio exista
+        cb(null, path.join(__dirname, '../../uploads/')); // Asegúrate de que este directorio exista
     },
     filename: function(req, file, cb) {
         // Generación del nombre de archivo para evitar conflictos y problemas con caracteres especiales
