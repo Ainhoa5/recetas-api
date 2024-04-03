@@ -1,6 +1,7 @@
 const express = require("express");
 const api = express.Router();
 const userController = require("../controllers/userController");
+const { userValidationRules, validate } = require('../../middleware/validationMiddleware');
 
 /**
  * Estas rutas definen las operaciones CRUD para el recurso de usuario.
@@ -20,9 +21,9 @@ api.delete("/user/:idUser", userController.deleteUser);
 api.get("/bypassword/:idUser", userController.getPasswordById);
 
 // Registrar un nuevo usuario
-api.post("/user/register", userController.registerUser);
+api.post("/user/register", userValidationRules(), validate, userController.registerUser);
 
 // Iniciar sesión como usuario
-api.post("/user/login", userController.loginUser);
+api.post("/user/login", userValidationRules(), validate, userController.loginUser);
 
 module.exports = api;

@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
-const { use } = require("../routes/recipe");
-const PasswordUtil = require("../utils/passwordUtil");
+const { generateAccessToken } = require("../services/authService");
+const PasswordUtil = require('../utils/passwordUtil');
+
 
 //Registrar usuario
 async function registerUser(req, res) {
@@ -43,7 +43,8 @@ async function loginUser(req, res) {
     if (!passwordMatch) {
       return res.status(400).send("Contraseña incorrecta");
     } else {
-      res.send("Inicio de sesión exitoso");
+      const token = generateAccessToken(user);
+      res.json({ message: "Inicio de sesión exitoso", token }); // Enviar el token al cliente
     }
   } catch (error) {
     console.error(error);
@@ -88,6 +89,11 @@ async function updateUser(req, res) {
   const params = req.body;
 
   try {
+    // Si se incluye una nueva contraseña en la solicitud, cifrarla antes de la actualización
+    if (params.password) {
+      params.password = await PasswordUtil.encryptPassword(params.password);
+    }
+    
     const userUpdated = await User.findByIdAndUpdate(idUser, params);
 
     if (!userUpdated) {
