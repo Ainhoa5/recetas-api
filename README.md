@@ -42,7 +42,7 @@ A continuación, se describen los endpoints disponibles y cómo interactuar con 
 
   #### Ejemplo de solicitud:
 
-  GET https://localhost:3000/api/5f987eaf2f9b3100166d9c84
+  GET https://localhost:3000/api/660aa49716f2f2592381b838
 
 #### Crear una Nueva Receta
 
@@ -73,10 +73,11 @@ A continuación, se describen los endpoints disponibles y cómo interactuar con 
   ```json
   {
     "nombre": "Nuevo Nombre de la Receta",
-    "ingredientes": {
-      "ingrediente1": "nueva cantidad",
-      "ingrediente2": "nueva cantidad"
-    }
+    "alergenos": [
+      "lácteos",
+      "gluten"
+    ]
+    
   }
   ```
 
