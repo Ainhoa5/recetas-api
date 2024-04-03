@@ -3,7 +3,7 @@ const https = require("https");
 const fs = require("fs");
 const app = require("./app");
 const connectDatabase = require("./config/database");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3977;
 
 // Lea los archivos del certificado y la clave
 const path = require("path");
