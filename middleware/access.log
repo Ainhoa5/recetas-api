@@ -116,3 +116,5 @@
 ::1 - - [03/Apr/2024:08:03:49 +0000] "GET /api/ HTTP/1.1" 200 2014 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 ::1 - - [03/Apr/2024:08:03:49 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "https://localhost:3000/api/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 ::ffff:127.0.0.1 - - [03/Apr/2024:08:26:05 +0000] "GET /api/ HTTP/1.1" 200 2014 "-" "insomnia/8.6.1"
+::1 - - [03/Apr/2024:08:51:56 +0000] "GET /admin/user HTTP/1.1" 200 573 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [03/Apr/2024:09:54:16 +0000] "GET /api/ HTTP/1.1" 200 2014 "-" "insomnia/8.6.1"
