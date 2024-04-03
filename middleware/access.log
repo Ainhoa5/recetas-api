@@ -112,3 +112,7 @@
 ::ffff:127.0.0.1 - - [21/Mar/2024:09:41:20 +0000] "POST /admin/user/login HTTP/1.1" 400 22 "-" "insomnia/8.6.1"
 ::ffff:127.0.0.1 - - [21/Mar/2024:09:41:24 +0000] "POST /admin/user/login HTTP/1.1" 200 25 "-" "insomnia/8.6.1"
 ::ffff:127.0.0.1 - - [21/Mar/2024:09:41:30 +0000] "POST /admin/user/login HTTP/1.1" 400 22 "-" "insomnia/8.6.1"
+::ffff:127.0.0.1 - - [02/Apr/2024:23:13:25 +0000] "GET /api/ HTTP/1.1" 200 2014 "-" "insomnia/8.6.1"
+::1 - - [03/Apr/2024:08:03:49 +0000] "GET /api/ HTTP/1.1" 200 2014 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+::1 - - [03/Apr/2024:08:03:49 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "https://localhost:3000/api/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [03/Apr/2024:08:26:05 +0000] "GET /api/ HTTP/1.1" 200 2014 "-" "insomnia/8.6.1"
