@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const recipeController = require('../controllers/recipeController');
+const { authenticateToken } = require('../../middleware/authMiddleware');
 
 const api = express.Router();
 
@@ -31,15 +32,14 @@ const upload = multer({
     }
 });
 
-// Rutas CRUD con el middleware de Multer para la ruta POST
-api.post('/', upload.single('image'), recipeController.createRecipe);
+// Requires auth
+api.post('/', authenticateToken, upload.single('image'), recipeController.createRecipe); // insertar
+api.put('/:idRecipe', authenticateToken, recipeController.updateRecipe); // editar
+api.delete('/:idRecipe', authenticateToken, recipeController.deleteRecipe); // eliminar
 
-// Resto de tus rutas
+// Doesnt require auth
 api.get('/', recipeController.getRecipes); 
 api.get('/:idRecipe', recipeController.getRecipe);
-api.put('/:idRecipe', recipeController.updateRecipe); 
-api.delete('/:idRecipe', recipeController.deleteRecipe);
-
 // Filtros y alergenos
 api.get('/sin-alergenos/:alergenos', recipeController.getRecipesWithoutAllergens);
 api.get('/byname/:nombre', recipeController.getRecipesByName);

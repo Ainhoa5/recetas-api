@@ -9,9 +9,9 @@ const recipeSchema = schema({
         maxlength: 100 // Establece una longitud máxima para el nombre
     },
     ingredientes: {
-        type: Map,
-        of: String,
-        required: false // Hace que el mapa de ingredientes sea obligatorio
+      type: String,
+      required: true, // Hace que el nombre sea obligatorio
+      trim: true, // Elimina los espacios al principio y al final
     },
     alergenos: {
         type: [String],

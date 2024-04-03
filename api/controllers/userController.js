@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
 const { use } = require("../routes/recipe");
 const PasswordUtil = require("../utils/passwordUtil");
+const { generateAccessToken } = require("../services/authService"); // Asumiendo que authService.js está en la carpeta services
+
 
 //Registrar usuario
 async function registerUser(req, res) {
@@ -43,13 +45,16 @@ async function loginUser(req, res) {
     if (!passwordMatch) {
       return res.status(400).send("Contraseña incorrecta");
     } else {
-      res.send("Inicio de sesión exitoso");
+      // Generación del token
+      const token = generateAccessToken(user);
+      res.json({ message: "Inicio de sesión exitoso", token }); // Enviar el token al cliente
     }
   } catch (error) {
     console.error(error);
     res.status(500).send("Error del servidor");
   }
 }
+
 
 //Obtener todos los usuarios
 async function getUsers(req, res) {
